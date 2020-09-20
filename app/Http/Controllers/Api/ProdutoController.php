@@ -8,9 +8,24 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+    private $produto;
+
+    public function __construct(Produto $produto)
+    {
+        $this->produto = $produto;
+    }
+
     public function index()
     {
-        //return ['status' => true];
-        return Produto::all();
+        $data = ['data' => $this->produto->all()];
+
+        return response()->json($data); 
+    }
+
+    public function show(Produto $id)
+    {
+        $data = ['data' => $id];
+
+        return response()->json($data);
     }
 }

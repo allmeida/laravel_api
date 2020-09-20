@@ -18,5 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('API')->name('api.')->group(function(){
-    Route::get('/produtos', 'ProdutoController@index')->name('produtos');
+    Route::prefix('produtos')->group(function(){
+        Route::get('/', 'ProdutoController@index')->name('index_produtos');
+        Route::get('/{id}', 'ProdutoController@show')->name('unico_produtos');
+    });
 });
