@@ -17,7 +17,7 @@ class ProdutoController extends Controller
 
     public function index()
     {
-        $data = ['data' => $this->produto->all()];
+        $data = ['data' => $this->produto->paginate(5)];
 
         return response()->json($data); 
     }
