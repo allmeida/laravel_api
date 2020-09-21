@@ -23,5 +23,6 @@ Route::namespace('API')->name('api.')->group(function(){
         Route::get('/{id}', 'ProdutoController@show')->name('unico_produtos');
 
         Route::post('/', 'ProdutoController@store')->name('store_produtos');
+        Route::put('/{id}', 'ProdutoController@update')->name('update_produtos');
     });
 });
