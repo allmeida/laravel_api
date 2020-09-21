@@ -50,7 +50,7 @@ class ProdutoController extends Controller
         }
     }
     public function update(Request $request, $id)
-    {
+    {  
         try {
 
             $produtoData = $request->all();
@@ -67,6 +67,22 @@ class ProdutoController extends Controller
             }
             return response()->json(ApiError::errorMessage('Houve um erro', 1010));
 
+        }
+    }
+
+    public function delete(Produto $id)
+    {
+        try {
+            $id->delete();
+
+            return response()->json(['data' => ['msg' => 'Produto: ' . $id->name . ' removido com sucesso! ']], 200);
+
+        } catch (\Exception $e) {
+            if(config('app.debug')) {
+                return response()->json(ApiError::errorMessage($e->getMessage(), 1010));
+
+            }
+            return response()->json(ApiError::errorMessage('Houve um erro ao excluir', 1010));
         }
     }
 }
