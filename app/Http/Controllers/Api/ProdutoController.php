@@ -37,7 +37,8 @@ class ProdutoController extends Controller
             $produtoData = $request->all();
             $this->produto->create($produtoData);
 
-            return response()->json(['msg' => 'Produto Criado com Sucesso!'], 201);
+            $retorno = ['data' => ['msg' => 'Produto Criado com Sucesso!']];
+            return response()->json($retorno, 201);
 
         } catch (\Exception $e) {
             if(config('app.debug')) {
