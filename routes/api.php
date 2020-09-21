@@ -21,5 +21,7 @@ Route::namespace('API')->name('api.')->group(function(){
     Route::prefix('produtos')->group(function(){
         Route::get('/', 'ProdutoController@index')->name('index_produtos');
         Route::get('/{id}', 'ProdutoController@show')->name('unico_produtos');
+
+        Route::post('/', 'ProdutoController@store')->name('store_produtos');
     });
 });

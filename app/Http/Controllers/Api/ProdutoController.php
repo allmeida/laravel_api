@@ -17,7 +17,7 @@ class ProdutoController extends Controller
 
     public function index()
     {
-        $data = ['data' => $this->produto->paginate(5)];
+        $data = ['data' => $this->produto->paginate(10)];
 
         return response()->json($data); 
     }
@@ -27,5 +27,11 @@ class ProdutoController extends Controller
         $data = ['data' => $id];
 
         return response()->json($data);
+    }
+
+    public function store(Request $request)
+    {
+        $produtoData = $request->all();
+        $this->produto->create($produtoData);
     }
 }
