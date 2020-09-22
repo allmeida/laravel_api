@@ -23,10 +23,13 @@ class ProdutoController extends Controller
         return response()->json($data); 
     }
 
-    public function show(Produto $id)
+    public function show($id)
     {
-        $data = ['data' => $id];
+        $produto = $this->produto->find($id);       // faz a busca no banco.
+        if(! $produto)                              // se nao encontar retorna uma mensagem e nao pagina de erro 404.
+            return response()->json(ApiError::errorMessage('Produto não encontrado!', 4040), 404); // status 4040 para erros internos da aplicação.
 
+        $data = ['data' => $produto];
         return response()->json($data);
     }
 
@@ -42,14 +45,14 @@ class ProdutoController extends Controller
 
         } catch (\Exception $e) {
             if(config('app.debug')) {
-                return response()->json(ApiError::errorMessage($e->getMessage(), 1010)); // retorna o codigo de erro.
+                return response()->json(ApiError::errorMessage($e->getMessage(), 1010 , 500)); // retorna o codigo de erro internos da aplicação.
 
             }
-            return response()->json(ApiError::errorMessage('Houve um erro', 1010)); // retorna apenas um texto como mensagem.
+            return response()->json(ApiError::errorMessage('Houve um erro ao criar!', 1010, 500));
 
         }
     }
-    
+
     public function update(Request $request, $id)
     {  
         try {
@@ -63,10 +66,10 @@ class ProdutoController extends Controller
 
         } catch (\Exception $e) {
             if(config('app.debug')) {
-                return response()->json(ApiError::errorMessage($e->getMessage(), 1010));
+                return response()->json(ApiError::errorMessage($e->getMessage(), 1012, 500)); // retorna o codigo de erro internos da aplicação.
 
             }
-            return response()->json(ApiError::errorMessage('Houve um erro', 1010));
+            return response()->json(ApiError::errorMessage('Houve um erro', 1012, 500));
 
         }
     }
@@ -80,10 +83,10 @@ class ProdutoController extends Controller
 
         } catch (\Exception $e) {
             if(config('app.debug')) {
-                return response()->json(ApiError::errorMessage($e->getMessage(), 1010));
+                return response()->json(ApiError::errorMessage($e->getMessage(), 1010, 500)); // retorna o codigo de erro internos da aplicação.
 
             }
-            return response()->json(ApiError::errorMessage('Houve um erro ao excluir', 1010));
+            return response()->json(ApiError::errorMessage('Houve um erro ao excluir!', 1012, 500));
         }
     }
 }
